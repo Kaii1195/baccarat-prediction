@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Baccarat Prediction System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="header-logo-icon">👑</span>
+                Baccarat Prediction
+            </h1>
+            <p>Hệ Thống Dự Đoán Đa Phương Pháp</p>
+        </header>
+
+        <div class="three-column-layout">
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+                <section class="panel-section">
+                    <h2> Nhập Kết Quả</h2>
+                    <div class="shoe-info-display">
+                        <strong id="shoe-info">Shoe #1</strong>
+                        <span id="hand-count">0/80 phiên</span>
+                    </div>
+                    <div class="input-buttons">
+                        <button class="result-btn banker" onclick="playSound('banker'); addResult('B')">🔴 Banker</button>
+                        <button class="result-btn player" onclick="playSound('player'); addResult('P')">🔵 Player</button>
+                        <button class="result-btn tie" onclick="playSound('tie'); addResult('T')">🟢 Tie</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="undoLast()" title="Hoàn tác kết quả cuối">
+                            <span class="btn-icon">↩️</span>
+                            <span class="btn-label">Hoàn tác</span>
+                        </button>
+                        <button class="action-btn" onclick="resetShoe()" title="Bắt đầu shoe mới">
+                            <span class="btn-icon">🎴</span>
+                            <span class="btn-label">Shoe mới</span>
+                        </button>
+                        <button class="action-btn" onclick="clearAll()" title="Xóa tất cả dữ liệu">
+                            <span class="btn-icon">🗑️</span>
+                            <span class="btn-label">Xóa hết</span>
+                        </button>
+                    </div>
+                </section>
+
+                <section class="panel-section">
+                    <h2> Hiệu Suất Dự Đoán</h2>
+                    <div class="prediction-stats">
+                        <div class="stat-item stat-winrate">
+                            <span class="stat-icon">✅</span>
+                            <div class="stat-data">
+                                <div class="stat-label">Tỷ Lệ Thắng</div>
+                                <div class="stat-value" id="prediction-winrate">0%</div>
+                            </div>
+                        </div>
+                        <div class="stat-item stat-streak">
+                            <span class="stat-icon" id="streak-icon">🔥</span>
+                            <div class="stat-data">
+                                <div class="stat-label">Chuỗi Hiện Tại</div>
+                                <div class="stat-value" id="prediction-streak">-</div>
+                            </div>
+                        </div>
+                        <div class="stat-item stat-loss">
+                            <span class="stat-icon">⚠️</span>
+                            <div class="stat-data">
+                                <div class="stat-label">Chuỗi Thua Dài Nhất</div>
+                                <div class="stat-value" id="max-loss-streak">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prediction-summary-grid">
+                        <div class="summary-item summary-correct">
+                            <span class="summary-icon">✓</span>
+                            <div class="summary-data">
+                                <div class="summary-label">Đúng</div>
+                                <div class="summary-value" id="prediction-correct">0</div>
+                            </div>
+                        </div>
+                        <div class="summary-item summary-wrong">
+                            <span class="summary-icon">✗</span>
+                            <div class="summary-data">
+                                <div class="summary-label">Sai</div>
+                                <div class="summary-value" id="prediction-wrong">0</div>
+                            </div>
+                        </div>
+                        <div class="summary-item summary-total">
+                            <span class="summary-icon">Σ</span>
+                            <div class="summary-data">
+                                <div class="summary-label">Tổng</div>
+                                <div class="summary-value" id="prediction-total">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- CENTER PANEL -->
+            <div class="center-panel">
+                <section class="panel-section prediction-hero-section">
+                    <h2>⭐ THẦN BÀI DỰ ĐOÁN</h2>
+                    <div class="prediction-hero-card">
+                        <div class="prediction-result-hero" id="pred-composite">
+                            <span class="pred-label">Chờ dữ liệu...</span>
+                        </div>
+                        <div class="confidence-display" id="confidence-text"></div>
+                    </div>
+                </section>
+
+                <section class="panel-section history-section">
+                    <h2> Lịch Sử</h2>
+                    <div class="history-container">
+                        <div class="history-display" id="history-display">
+                            <p class="empty-message">Chưa có dữ liệu. Nhấn nút phía trên để thêm kết quả.</p>
+                        </div>
+                    </div>
+                    <div class="history-footer">
+                        <span id="current-streak">N/A</span>
+                        <span class="divider">|</span>
+                        <span id="longest-streak-inline">Max: N/A</span>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+                <section class="panel-section">
+                    <h2> Thống Kê</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box banker">
+                            <h3>Banker</h3>
+                            <div class="stat-number" id="banker-count">0</div>
+                            <div class="stat-percentage" id="banker-percent">0%</div>
+                        </div>
+                        <div class="stat-box player">
+                            <h3>Player</h3>
+                            <div class="stat-number" id="player-count">0</div>
+                            <div class="stat-percentage" id="player-percent">0%</div>
+                        </div>
+                        <div class="stat-box tie">
+                            <h3>Tie</h3>
+                            <div class="stat-number" id="tie-count">0</div>
+                            <div class="stat-percentage" id="tie-percent">0%</div>
+                        </div>
+                        <div class="stat-box total">
+                            <h3>Total</h3>
+                            <div class="stat-number" id="total-count">0</div>
+                            <div class="stat-percentage" id="total-percent">0%</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+            <p>
+                <span class="footer-icon">🎰</span>
+                <span class="footer-brand">Baccarat Prediction System</span>
+                <span class="footer-separator">·</span>
+                <span class="footer-dev">Developed by DADO</span>
+                <span class="footer-separator">·</span>
+                <span class="footer-year">© 2025 - All Rights Reserved</span>
+            </p>
+        </footer>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+    <script src="app.js"></script>
+</body>
+</html>

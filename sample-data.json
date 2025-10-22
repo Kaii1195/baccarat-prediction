@@ -1,0 +1,26 @@
+{
+  "history": [
+    "B", "B", "P", "B", "P", "P", "B", "B", "B", "P",
+    "B", "P", "B", "B", "P", "P", "P", "B", "T", "B",
+    "B", "P", "B", "P", "B", "B", "P", "P", "B", "P",
+    "B", "B", "B", "P", "B", "P", "P", "B", "B", "P"
+  ],
+  "accuracy": {
+    "total": 15,
+    "correct": 8
+  },
+  "currentShoe": 1,
+  "currentHand": 40,
+  "shoeHistory": [
+    {
+      "shoeNumber": 1,
+      "hands": [
+        "B", "B", "P", "B", "P", "P", "B", "B", "B", "P",
+        "B", "P", "B", "B", "P", "P", "P", "B", "T", "B",
+        "B", "P", "B", "P", "B", "B", "P", "P", "B", "P",
+        "B", "B", "B", "P", "B", "P", "P", "B", "B", "P"
+      ]
+    }
+  ],
+  "exportDate": "2025-10-22T10:30:00.000Z"
+}
