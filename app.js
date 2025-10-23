@@ -280,6 +280,17 @@ function undoLast() {
     const currentShoeData = getCurrentShoeData();
     currentShoeData.hands.pop();
     
+    // QUAN TRỌNG: Reset predictions để tránh track duplicate
+    // Khi undo, prediction cũ không còn valid nữa
+    predictions = {
+        frequency: null,
+        pattern: null,
+        streak: null,
+        markov: null,
+        hotCold: null,
+        composite: null
+    };
+    
     // XÓA ACCURACY STAT CUỐI CÙNG - CHỈ NẾU match với ván vừa xóa
     if (accuracyStats.streakHistory.length > 0) {
         const lastPrediction = accuracyStats.streakHistory[accuracyStats.streakHistory.length - 1];
