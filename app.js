@@ -533,7 +533,7 @@ function displayPrediction(elementId, prediction) {
     
     // For large prediction box
     if (elementId === 'pred-composite') {
-        const MIN_CONFIDENCE = 60; // Chỉ hiện khi >60%
+        const MIN_CONFIDENCE = 65; // Chỉ hiện khi ≥65% (balance tốt giữa accuracy và frequency)
         
         if (confidenceNum < MIN_CONFIDENCE) {
             // Không đủ confidence -> chờ signal tốt hơn, KHÔNG hiện độ tin cậy
