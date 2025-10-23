@@ -642,8 +642,22 @@ function displayPrediction(elementId, prediction) {
         if (confidenceNum < MIN_CONFIDENCE) {
             // Không đủ confidence -> chờ signal tốt hơn, KHÔNG hiện độ tin cậy
             element.classList.add('waiting');
+            
+            const handsNeeded = Math.ceil((MIN_CONFIDENCE - confidenceNum) / 2); // Ước tính số ván cần thêm
+            const currentHands = gameHistory.length;
+            
             element.innerHTML = `
-                <span class="pred-label">Chờ tín hiệu tốt hơn...</span>
+                <div class="waiting-signal">
+                    <div class="spinner-icon">🔄</div>
+                    <span class="pred-label">Đang phân tích dữ liệu...</span>
+                    <div class="confidence-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${confidenceNum}%"></div>
+                        </div>
+                        <span class="progress-text">${confidence}% / 65%</span>
+                    </div>
+                    <small class="hint-text">💡 Dự đoán xuất hiện khi đạt ≥65%</small>
+                </div>
             `;
             
             const confidenceEl = document.getElementById('confidence-text');
