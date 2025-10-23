@@ -666,7 +666,6 @@ function displayPrediction(elementId, prediction) {
             element.classList.add(prediction.result.toLowerCase());
             
             const resultIcon = prediction.result === 'B' ? '🔴' : prediction.result === 'P' ? '🔵' : '🟢';
-            const confidenceLevel = confidenceNum >= 70 ? 'Cao' : confidenceNum >= 60 ? 'Trung bình' : 'Thấp';
             const confidenceColor = confidenceNum >= 70 ? '#2ecc71' : confidenceNum >= 60 ? '#f39c12' : '#95a5a6';
             
             element.innerHTML = `
@@ -677,10 +676,7 @@ function displayPrediction(elementId, prediction) {
                         <div class="confidence-bar">
                             <div class="confidence-fill" style="width: ${confidenceNum}%; background: ${confidenceColor}"></div>
                         </div>
-                        <div class="confidence-info">
-                            <span class="confidence-percent">${confidence}%</span>
-                            <span class="confidence-level">${confidenceLevel}</span>
-                        </div>
+                        <div class="confidence-text">Tỷ lệ thắng: ${confidence}%</div>
                     </div>
                 </div>
             `;
