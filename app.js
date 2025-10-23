@@ -536,7 +536,7 @@ function displayPrediction(elementId, prediction) {
         const MIN_CONFIDENCE = 60; // Chỉ hiện khi >60%
         
         if (confidenceNum < MIN_CONFIDENCE) {
-            // Không đủ confidence -> chờ signal tốt hơn
+            // Không đủ confidence -> chờ signal tốt hơn, KHÔNG hiện độ tin cậy
             element.classList.add('waiting');
             element.innerHTML = `
                 <span class="pred-label">Chờ tín hiệu tốt hơn...</span>
@@ -544,8 +544,8 @@ function displayPrediction(elementId, prediction) {
             
             const confidenceEl = document.getElementById('confidence-text');
             if (confidenceEl) {
-                confidenceEl.innerHTML = `<span class="confidence-label">Độ tin cậy</span>: ${confidence}%`;
-                confidenceEl.style.color = '#95a5a6';
+                confidenceEl.innerHTML = ''; // Ẩn hoàn toàn độ tin cậy
+                confidenceEl.style.color = '';
             }
         } else {
             // Đủ confidence -> show prediction
