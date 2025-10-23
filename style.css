@@ -1001,6 +1001,15 @@ footer .footer-icon {
         font-size: 1em;
     }
     
+    /* Đổi "Độ tin cậy" thành "Tỷ lệ thắng" trên mobile */
+    .confidence-label::before {
+        content: "Tỷ lệ thắng";
+    }
+    
+    .confidence-label {
+        font-size: 0;
+    }
+    
     /* Nút Banker/Player/Tie gọn hơn cho mobile */
     .result-buttons {
         display: grid;

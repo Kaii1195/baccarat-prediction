@@ -213,8 +213,8 @@ function addResult(result, skipUpdate = false) {
     }
     
     // Check prediction accuracy BEFORE adding new result (skip if batch import)
-    // Need at least 3 results to have a prediction
-    if (!skipUpdate && gameHistory.length >= 3 && predictions.composite && predictions.composite.result) {
+    // Need at least 20 results to have a prediction
+    if (!skipUpdate && gameHistory.length >= 20 && predictions.composite && predictions.composite.result) {
         checkPredictionAccuracy(result);
     }
     
@@ -486,7 +486,7 @@ function updateHistory() {
 }
 
 function updatePredictions() {
-    if (gameHistory.length < 3) {
+    if (gameHistory.length < 20) {
         resetPredictions();
         return;
     }
@@ -544,7 +544,7 @@ function displayPrediction(elementId, prediction) {
             
             const confidenceEl = document.getElementById('confidence-text');
             if (confidenceEl) {
-                confidenceEl.textContent = `Độ tin cậy: ${confidence}%`;
+                confidenceEl.innerHTML = `<span class="confidence-label">Độ tin cậy</span>: ${confidence}%`;
                 confidenceEl.style.color = '#95a5a6';
             }
         } else {
@@ -567,7 +567,7 @@ function displayPrediction(elementId, prediction) {
         element.classList.add(prediction.result.toLowerCase());
         element.innerHTML = `
             <span class="pred-label pred-${prediction.result}">${resultName}</span>
-            <span class="pred-confidence">Độ tin cậy: ${confidence}%</span>
+            <span class="pred-confidence"><span class="confidence-label">Độ tin cậy</span>: ${confidence}%</span>
         `;
     }
 }
@@ -969,7 +969,7 @@ function getLongestStreak() {
 }
 
 function getMostCommonPattern() {
-    if (gameHistory.length < 3) return 'N/A';
+    if (gameHistory.length < 20) return 'N/A';
     
     const patterns = {};
     const patternLength = 3;
