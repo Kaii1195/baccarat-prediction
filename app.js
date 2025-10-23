@@ -1766,3 +1766,56 @@ function saveMoneyState() {
 
 // Add button to manually record bet results (optional)
 // You can integrate this with prediction results later
+
+// ==========================================
+// GUIDE MODAL FUNCTIONS
+// ==========================================
+
+function openGuideModal() {
+    const modal = document.getElementById('guideModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+}
+
+function closeGuideModal(event) {
+    // If event exists, only close if clicking backdrop (not content)
+    if (event && event.target !== event.currentTarget) {
+        return;
+    }
+    
+    const modal = document.getElementById('guideModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scroll
+    }
+}
+
+function switchGuideTab(tabName) {
+    // Remove active from all tabs and contents
+    document.querySelectorAll('.guide-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.guide-tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Add active to selected tab
+    const selectedTab = event.target;
+    selectedTab.classList.add('active');
+    
+    // Show corresponding content
+    const contentId = 'guide-' + tabName;
+    const content = document.getElementById(contentId);
+    if (content) {
+        content.classList.add('active');
+    }
+}
+
+// Keyboard support (ESC to close)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeGuideModal();
+    }
+});
