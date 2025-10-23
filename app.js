@@ -220,6 +220,13 @@ function addResult(result, skipUpdate = false) {
         const confidenceNum = parseFloat(confidence);
         const MIN_CONFIDENCE = 65;
         
+        console.log('📊 Before adding result:', {
+            historyLength: gameHistory.length,
+            currentPrediction: predictions.composite.result,
+            confidence: confidenceNum + '%',
+            willTrack: confidenceNum >= MIN_CONFIDENCE
+        });
+        
         // CHỈ track prediction khi đã hiển thị (confidence >= 65%)
         if (confidenceNum >= MIN_CONFIDENCE) {
             previousPrediction = predictions.composite.result;
@@ -242,7 +249,13 @@ function addResult(result, skipUpdate = false) {
     // CHECK ACCURACY VỚI DỰ ĐOÁN CŨ (sau khi update)
     // Dự đoán cũ đã dự đoán cho ván hiện tại, giờ check xem đúng không
     if (previousPrediction) {
+        console.log('✅ Calling checkPredictionAccuracy with:', {
+            actualResult: result,
+            previousPrediction: previousPrediction
+        });
         checkPredictionAccuracy(result, previousPrediction);
+    } else {
+        console.log('⏭️ Skipping accuracy check (no previous prediction or confidence < 65%)');
     }
     
     // Check for warnings
@@ -679,6 +692,13 @@ function updateAdvancedStats() {
 }
 
 function updatePredictionStats() {
+    console.log('🔄 updatePredictionStats() called with:', {
+        total: accuracyStats.total,
+        correct: accuracyStats.correct,
+        currentStreak: accuracyStats.currentStreak,
+        maxLossStreak: accuracyStats.maxLossStreak
+    });
+    
     // Win Rate
     const winrateEl = document.getElementById('prediction-winrate');
     if (winrateEl) {
