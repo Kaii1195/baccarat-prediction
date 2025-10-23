@@ -54,6 +54,7 @@ header h1 {
     align-items: center;
     gap: 10px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    position: relative;
 }
 
 .header-logo-icon {
@@ -1296,15 +1297,14 @@ footer .footer-icon {
 .help-icon {
     position: absolute;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
+    top: 0;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1314,10 +1314,10 @@ footer .footer-icon {
 }
 
 .help-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
 }
 
 .guide-modal {
