@@ -49,19 +49,21 @@ header {
 header h1 {
     font-size: 2.5em;
     margin: 0;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 1px;
+}
+
+header h1 > span:not(.header-logo-icon) {
     background: linear-gradient(135deg, #5dade2, #3498db, #5dade2);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    text-shadow: 0 0 20px rgba(52, 152, 219, 0.4);
     filter: drop-shadow(0 3px 8px rgba(52, 152, 219, 0.3));
     animation: titleGradient 4s ease-in-out infinite;
-    letter-spacing: 1px;
 }
 
 @keyframes titleGradient {
@@ -245,7 +247,7 @@ header p {
 
 .shoe-info-display {
     background: rgba(46,204,113,0.1);
-    padding: 8px;
+    padding: 6px;
     border-radius: 6px;
     text-align: center;
     border: 1px solid var(--tie-color);
@@ -264,26 +266,26 @@ header p {
 
 .shoe-info-display strong {
     display: block;
-    font-size: 1em;
-    margin-bottom: 3px;
+    font-size: 0.95em;
+    margin-bottom: 2px;
     color: var(--tie-color);
 }
 
 .shoe-info-display span {
     color: var(--text-secondary);
-    font-size: 0.85em;
+    font-size: 0.8em;
 }
 
 .input-buttons {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 /* Enhanced Buttons with Animations */
 .result-btn {
-    padding: 12px;
-    font-size: 1em;
+    padding: 10px;
+    font-size: 0.95em;
     font-weight: 600;
     border: none;
     border-radius: 6px;
@@ -391,8 +393,8 @@ header p {
 }
 
 .action-btn {
-    padding: 10px 6px;
-    font-size: 1em;
+    padding: 8px 5px;
+    font-size: 0.95em;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -401,16 +403,16 @@ header p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 
 .action-btn .btn-icon {
-    font-size: 1.6em;
+    font-size: 1.4em;
     line-height: 1;
 }
 
 .action-btn .btn-label {
-    font-size: 0.7em;
+    font-size: 0.65em;
     color: var(--text-secondary);
     font-weight: 600;
     letter-spacing: 0.3px;
@@ -949,16 +951,16 @@ header p {
 .stats-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .stat-box {
     background: rgba(255,255,255,0.05);
-    padding: 12px;
+    padding: 8px 10px;
     border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     transition: all 0.3s ease;
 }
 
@@ -984,10 +986,10 @@ header p {
 }
 
 .stat-box h3 {
-    font-size: 0.85em;
+    font-size: 0.8em;
     font-weight: 600;
     margin: 0;
-    min-width: 55px;
+    min-width: 50px;
 }
 
 .stat-box.banker h3 {
@@ -1007,7 +1009,7 @@ header p {
 }
 
 .stat-number {
-    font-size: 1.8em;
+    font-size: 1.6em;
     font-weight: 700;
     flex: 1;
 }
@@ -1348,17 +1350,17 @@ footer .footer-icon {
         display: contents; /* Cho phép children trực tiếp vào flex container */
     }
     
-    /* Thứ tự mobile: 1.Input → 2.Lịch sử → 3.Dự đoán → 4.Hiệu suất → 5.Thống kê */
+    /* Thứ tự mobile: 1.Input → 2.Dự đoán → 3.Lịch sử → 4.Hiệu suất → 5.Thống kê */
     .left-panel .panel-section:nth-child(1) {
         order: 1; /* Nhập kết quả */
     }
     
-    .center-panel .history-section {
-        order: 2; /* Lịch sử */
+    .center-panel .prediction-hero-section {
+        order: 2; /* THẦN BÀI DỰ ĐOÁN - Lên đầu */
     }
     
-    .center-panel .prediction-hero-section {
-        order: 3; /* Dự đoán */
+    .center-panel .history-section {
+        order: 3; /* Lịch sử - Xuống sau */
     }
     
     .left-panel .panel-section:nth-child(2) {
