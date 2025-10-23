@@ -213,10 +213,17 @@ function addResult(result, skipUpdate = false) {
     }
     
     // LƯU DỰ ĐOÁN CŨ TRƯỚC KHI THÊM KẾT QUẢ MỚI
-    // Dự đoán này dự đoán cho VÁN HIỆN TẠI (result vừa nhập)
+    // CHỈ lưu nếu confidence ≥65% (tức là đã HIỂN THỊ cho user)
     let previousPrediction = null;
     if (!skipUpdate && gameHistory.length >= 20 && predictions.composite && predictions.composite.result) {
-        previousPrediction = predictions.composite.result;
+        const confidence = (predictions.composite.confidence * 100).toFixed(1);
+        const confidenceNum = parseFloat(confidence);
+        const MIN_CONFIDENCE = 65;
+        
+        // CHỈ track prediction khi đã hiển thị (confidence >= 65%)
+        if (confidenceNum >= MIN_CONFIDENCE) {
+            previousPrediction = predictions.composite.result;
+        }
     }
     
     gameHistory.push(result);
