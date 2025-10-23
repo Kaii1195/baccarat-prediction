@@ -185,7 +185,6 @@
                 <div class="guide-tabs">
                     <button class="guide-tab active" onclick="switchGuideTab('start')">Bắt Đầu</button>
                     <button class="guide-tab" onclick="switchGuideTab('features')">Chức Năng</button>
-                    <button class="guide-tab" onclick="switchGuideTab('algorithm')">Thuật Toán</button>
                 </div>
                 
                 <!-- Tab Content: Bắt Đầu -->
@@ -205,11 +204,7 @@
                         <div class="guide-step-number">2️⃣</div>
                         <div class="guide-step-content">
                             <h4>Xem Dự Đoán</h4>
-                            <p>Sau 20 ván, hệ thống sẽ hiển thị dự đoán cho ván tiếp theo:</p>
-                            <ul>
-                                <li><strong>Tỷ lệ thắng ≥65%</strong>: Hiển thị dự đoán cụ thể</li>
-                                <li><strong>Tỷ lệ thắng &lt;65%</strong>: Hiển thị "Chờ tín hiệu tốt hơn..."</li>
-                            </ul>
+                            <p>Sau 20 ván, hệ thống sẽ hiển thị dự đoán cho ván tiếp theo với tỷ lệ thắng</p>
                         </div>
                     </div>
                     
@@ -225,6 +220,16 @@
                                 <li><strong>Đúng/Sai/Tổng</strong>: Tổng hợp kết quả</li>
                             </ul>
                         </div>
+                    </div>
+                    
+                    <div class="guide-disclaimer">
+                        <h4>⚠️ Lưu Ý Quan Trọng</h4>
+                        <ul>
+                            <li>Đây là công cụ <strong>hỗ trợ phân tích</strong>, không đảm bảo 100% chính xác</li>
+                            <li>Baccarat là trò chơi may rủi, hãy quản lý vốn cẩn thận</li>
+                            <li>Không chơi quá khả năng tài chính của bạn</li>
+                            <li>Chỉ sử dụng cho mục đích giải trí và học tập</li>
+                        </ul>
                     </div>
                 </div>
                 
@@ -259,53 +264,6 @@
                     </ul>
                 </div>
                 
-                <!-- Tab Content: Thuật Toán -->
-                <div id="guide-algorithm" class="guide-tab-content">
-                    <h3>📊 Thuật Toán Dự Đoán</h3>
-                    
-                    <p>Hệ thống sử dụng <strong>5 phương pháp phân tích</strong> độc lập:</p>
-                    
-                    <div class="guide-algorithm-item">
-                        <h4>1. Tần Suất (Frequency)</h4>
-                        <p>Phân tích tỷ lệ xuất hiện của Banker, Player, Tie trong lịch sử</p>
-                    </div>
-                    
-                    <div class="guide-algorithm-item">
-                        <h4>2. Nhận Diện Mẫu (Pattern)</h4>
-                        <p>Tìm các mẫu lặp lại 3-5 ván và dự đoán ván tiếp theo</p>
-                    </div>
-                    
-                    <div class="guide-algorithm-item">
-                        <h4>3. Theo Dõi Chuỗi (Streak)</h4>
-                        <p>Phân tích xu hướng thắng/thua liên tiếp và khả năng đảo chiều</p>
-                    </div>
-                    
-                    <div class="guide-algorithm-item">
-                        <h4>4. Chuỗi Markov (Markov Chain)</h4>
-                        <p>Tính xác suất chuyển đổi giữa các trạng thái B→P, P→B, etc.</p>
-                    </div>
-                    
-                    <div class="guide-algorithm-item">
-                        <h4>5. Hot/Cold Analysis</h4>
-                        <p>Theo dõi xu hướng "nóng" (thắng nhiều) hoặc "lạnh" (thua nhiều) gần đây</p>
-                    </div>
-                    
-                    <div class="guide-composite">
-                        <h4>🎯 Dự Đoán Tổng Hợp</h4>
-                        <p>Kết quả cuối cùng là <strong>tổng hợp có trọng số</strong> từ 5 phương pháp trên</p>
-                        <p>Tỷ lệ thắng được tính dựa trên số phương pháp đồng ý với dự đoán</p>
-                    </div>
-                    
-                    <div class="guide-disclaimer">
-                        <h4>⚠️ Lưu Ý Quan Trọng</h4>
-                        <ul>
-                            <li>Đây là công cụ <strong>hỗ trợ phân tích</strong>, không đảm bảo 100% chính xác</li>
-                            <li>Baccarat là trò chơi may rủi, hãy quản lý vốn cẩn thận</li>
-                            <li>Không chơi quá khả năng tài chính của bạn</li>
-                            <li>Chỉ sử dụng cho mục đích giải trí và học tập</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             
             <div class="guide-modal-footer">
