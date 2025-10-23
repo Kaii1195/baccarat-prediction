@@ -1571,33 +1571,10 @@ footer .footer-icon {
         font-size: 0.65em;
     }
     
-    /* Prediction hero compact */
-    .prediction-hero-card {
-        min-height: 100px;
-        padding: 15px 10px;
-    }
-    
-    .prediction-result-hero {
-        font-size: 1.8em;
-    }
-    
-    /* Analyzing data mobile */
-    .analyzing-data {
-        padding: 12px 10px;
-        gap: 10px;
-    }
-    
-    .spinner-dots .dot {
-        width: 7px;
-        height: 7px;
-    }
-    
-    .analyzing-text {
-        font-size: 1.1em;
-    }
-    
-    .cursor {
-        height: 1em;
+    /* Shoe info mobile */
+    .shoe-info-display {
+        padding: 6px;
+        font-size: 0.85em;
     }
     
     .prediction-confidence-text,
@@ -1681,6 +1658,21 @@ footer .footer-icon {
     
     .footer-dev {
         font-size: 0.9em;
+    }
+    
+    /* Help icon mobile optimization */
+    .help-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        right: 12px;
+    }
+    
+    .help-tooltip {
+        font-size: 10px;
+        padding: 5px 10px;
+        bottom: -38px;
+        white-space: nowrap;
     }
 }
 
@@ -2148,55 +2140,80 @@ footer .footer-icon {
     
     /* Mobile adjustments for new animations */
     .prediction-hero-section h2 {
-        font-size: 1.2em;
-        letter-spacing: 1.5px;
+        font-size: 1.1em;
+        letter-spacing: 1px;
+        padding: 8px 0;
     }
     
+    /* Pulse animation - Thu gọn cho mobile */
     .pulse-container {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
     }
     
     @keyframes pulseExpand {
         0% {
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             opacity: 0.8;
         }
         100% {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             opacity: 0;
         }
     }
     
     .pulse-core {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
     }
     
     .analyzing-text {
-        font-size: 1.1em;
+        font-size: 1em;
     }
     
-    .prediction-card {
-        padding: 10px 12px;
+    .analyzing-data {
         gap: 10px;
+        padding: 15px;
+    }
+    
+    /* Prediction card - Compact horizontal layout */
+    .prediction-card {
+        padding: 8px 10px;
+        gap: 8px;
+        flex-wrap: nowrap;
     }
     
     .result-icon {
-        font-size: 1.8em;
+        font-size: 1.5em;
+        flex-shrink: 0;
     }
     
     .result-name {
-        font-size: 1.3em;
+        font-size: 1.1em;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+    }
+    
+    .confidence-bar-container {
+        min-width: 0;
+        flex: 1;
     }
     
     .confidence-text {
-        font-size: 0.8em;
+        font-size: 0.75em;
+        white-space: nowrap;
     }
     
     .confidence-bar {
-        height: 5px;
+        height: 4px;
+        margin-bottom: 3px;
+    }
+    
+    /* Prediction hero card compact */
+    .prediction-hero-card {
+        padding: 12px 8px;
+        min-height: 90px;
     }
 }
