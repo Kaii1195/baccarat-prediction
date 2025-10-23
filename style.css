@@ -47,14 +47,30 @@ header {
 }
 
 header h1 {
-    font-size: 1.8em;
+    font-size: 2.5em;
     margin: 0;
-    color: #5dade2;
-    font-weight: 700;
+    background: linear-gradient(135deg, #5dade2, #3498db, #5dade2);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    gap: 12px;
+    text-shadow: 0 0 20px rgba(52, 152, 219, 0.4);
+    filter: drop-shadow(0 3px 8px rgba(52, 152, 219, 0.3));
+    animation: titleGradient 4s ease-in-out infinite;
+    letter-spacing: 1px;
+}
+
+@keyframes titleGradient {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .header-logo-icon {
@@ -92,6 +108,15 @@ header h1 {
     100% { transform: scale(1.2) rotate(360deg); }
 }
 
+@keyframes subtitleFade {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
 .header-logo {
     height: 45px;
     width: auto;
@@ -105,8 +130,12 @@ header h1 {
 }
 
 header p {
-    color: #95a5a6;
-    font-size: 0.85em;
+    color: #bdc3c7;
+    font-size: 1.1em;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    animation: subtitleFade 3s ease-in-out infinite;
     margin: 4px 0 0 0;
     font-weight: 400;
 }
@@ -1261,7 +1290,11 @@ footer .footer-icon {
     }
     
     header h1 {
-        font-size: 1.5em;
+        font-size: 2em;
+    }
+    
+    header p {
+        font-size: 1em;
     }
 }
 
@@ -1287,12 +1320,12 @@ footer .footer-icon {
     }
     
     header h1 {
-        font-size: 1.3em;
+        font-size: 1.8em;
         gap: 8px;
     }
     
     header p {
-        font-size: 0.75em;
+        font-size: 0.95em;
     }
     
     /* Mobile gesture hints */
@@ -1482,16 +1515,16 @@ footer .footer-icon {
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.1em;
-        gap: 6px;
+        font-size: 1.6em;
+        gap: 8px;
     }
     
     .header-logo-icon {
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
     
     header p {
-        font-size: 0.65em;
+        font-size: 0.9em;
     }
     
     .three-column-layout {
