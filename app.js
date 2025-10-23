@@ -4,6 +4,10 @@
 // ==========================================
 
 // Global Variables
+// ===== CONSTANTS =====
+const MIN_CONFIDENCE_THRESHOLD = 65; // Ngưỡng confidence tối thiểu để hiển thị prediction (%)
+const MIN_HANDS_FOR_PREDICTION = 20; // Số ván tối thiểu để bắt đầu dự đoán
+
 // ===== SOUND EFFECTS =====
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -213,22 +217,21 @@ function addResult(result, skipUpdate = false) {
     }
     
     // LƯU DỰ ĐOÁN CŨ TRƯỚC KHI THÊM KẾT QUẢ MỚI
-    // CHỈ lưu nếu confidence ≥65% (tức là đã HIỂN THỊ cho user)
+    // CHỈ lưu nếu confidence ≥MIN_CONFIDENCE_THRESHOLD% (tức là đã HIỂN THỊ cho user)
     let previousPrediction = null;
-    if (!skipUpdate && gameHistory.length >= 20 && predictions.composite && predictions.composite.result) {
+    if (!skipUpdate && gameHistory.length >= MIN_HANDS_FOR_PREDICTION && predictions.composite && predictions.composite.result) {
         const confidence = (predictions.composite.confidence * 100).toFixed(1);
         const confidenceNum = parseFloat(confidence);
-        const MIN_CONFIDENCE = 65;
         
         console.log('📊 Before adding result:', {
             historyLength: gameHistory.length,
             currentPrediction: predictions.composite.result,
             confidence: confidenceNum + '%',
-            willTrack: confidenceNum >= MIN_CONFIDENCE
+            willTrack: confidenceNum >= MIN_CONFIDENCE_THRESHOLD
         });
         
-        // CHỈ track prediction khi đã hiển thị (confidence >= 65%)
-        if (confidenceNum >= MIN_CONFIDENCE) {
+        // CHỈ track prediction khi đã hiển thị (confidence >= MIN_CONFIDENCE_THRESHOLD%)
+        if (confidenceNum >= MIN_CONFIDENCE_THRESHOLD) {
             previousPrediction = predictions.composite.result;
         }
     }
@@ -590,7 +593,7 @@ function updateHistory() {
 }
 
 function updatePredictions() {
-    if (gameHistory.length < 20) {
+    if (gameHistory.length < MIN_HANDS_FOR_PREDICTION) {
         resetPredictions();
         return;
     }
@@ -637,14 +640,9 @@ function displayPrediction(elementId, prediction) {
     
     // For large prediction box
     if (elementId === 'pred-composite') {
-        const MIN_CONFIDENCE = 65; // Chỉ hiện khi ≥65% (balance tốt giữa accuracy và frequency)
-        
-        if (confidenceNum < MIN_CONFIDENCE) {
+        if (confidenceNum < MIN_CONFIDENCE_THRESHOLD) {
             // Không đủ confidence -> chờ signal tốt hơn, KHÔNG hiện độ tin cậy
             element.classList.add('waiting');
-            
-            const handsNeeded = Math.ceil((MIN_CONFIDENCE - confidenceNum) / 2); // Ước tính số ván cần thêm
-            const currentHands = gameHistory.length;
             
             element.innerHTML = `
                 <div class="waiting-signal">
@@ -654,9 +652,9 @@ function displayPrediction(elementId, prediction) {
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${confidenceNum}%"></div>
                         </div>
-                        <span class="progress-text">${confidence}% / 65%</span>
+                        <span class="progress-text">${confidence}% / ${MIN_CONFIDENCE_THRESHOLD}%</span>
                     </div>
-                    <small class="hint-text">💡 Dự đoán xuất hiện khi đạt ≥65%</small>
+                    <small class="hint-text">💡 Dự đoán xuất hiện khi đạt ≥${MIN_CONFIDENCE_THRESHOLD}%</small>
                 </div>
             `;
             
@@ -1094,7 +1092,7 @@ function getLongestStreak() {
 }
 
 function getMostCommonPattern() {
-    if (gameHistory.length < 20) return 'N/A';
+    if (gameHistory.length < MIN_HANDS_FOR_PREDICTION) return 'N/A';
     
     const patterns = {};
     const patternLength = 3;
