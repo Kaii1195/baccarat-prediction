@@ -260,6 +260,49 @@ function undoLast() {
     const currentShoeData = getCurrentShoeData();
     currentShoeData.hands.pop();
     
+    // XÓA ACCURACY STAT CUỐI CÙNG (nếu có)
+    if (accuracyStats.streakHistory.length > 0) {
+        const lastPrediction = accuracyStats.streakHistory.pop();
+        
+        // Trừ total
+        if (accuracyStats.total > 0) {
+            accuracyStats.total--;
+        }
+        
+        // Trừ correct nếu dự đoán đúng
+        if (lastPrediction.result === 'W' && accuracyStats.correct > 0) {
+            accuracyStats.correct--;
+        }
+        
+        // Recalculate streak từ streakHistory còn lại
+        if (accuracyStats.streakHistory.length === 0) {
+            accuracyStats.currentStreak = 0;
+            accuracyStats.maxLossStreak = 0;
+        } else {
+            // Tính lại streak từ history
+            let streak = 0;
+            let maxLoss = 0;
+            let currentLoss = 0;
+            
+            for (let i = accuracyStats.streakHistory.length - 1; i >= 0; i--) {
+                const pred = accuracyStats.streakHistory[i];
+                if (pred.result === 'W') {
+                    if (streak <= 0) streak = 1;
+                    else streak++;
+                    currentLoss = 0;
+                } else {
+                    if (streak >= 0) streak = -1;
+                    else streak--;
+                    currentLoss++;
+                    if (currentLoss > maxLoss) maxLoss = currentLoss;
+                }
+            }
+            
+            accuracyStats.currentStreak = streak;
+            accuracyStats.maxLossStreak = maxLoss;
+        }
+    }
+    
     saveToStorage();
     updateDisplay();
     showNotification(`Đã xóa: ${getResultName(removed)}`);
