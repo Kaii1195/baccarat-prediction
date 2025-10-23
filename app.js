@@ -641,20 +641,17 @@ function displayPrediction(elementId, prediction) {
     // For large prediction box
     if (elementId === 'pred-composite') {
         if (confidenceNum < MIN_CONFIDENCE_THRESHOLD) {
-            // Không đủ confidence -> chờ signal tốt hơn, KHÔNG hiện độ tin cậy
+            // Không đủ confidence -> đang phân tích, KHÔNG hiện độ tin cậy
             element.classList.add('waiting');
             
             element.innerHTML = `
-                <div class="waiting-signal">
-                    <div class="spinner-icon">🔄</div>
-                    <span class="pred-label">Đang phân tích dữ liệu...</span>
-                    <div class="confidence-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${confidenceNum}%"></div>
-                        </div>
-                        <span class="progress-text">${confidence}% / ${MIN_CONFIDENCE_THRESHOLD}%</span>
+                <div class="analyzing-data">
+                    <div class="spinner-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
                     </div>
-                    <small class="hint-text">💡 Dự đoán xuất hiện khi đạt ≥${MIN_CONFIDENCE_THRESHOLD}%</small>
+                    <span class="analyzing-text">Đang phân tích dữ liệu</span>
                 </div>
             `;
             
