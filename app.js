@@ -291,12 +291,16 @@ function undoLast() {
         composite: null
     };
     
-    // XÓA ACCURACY STAT CUỐI CÙNG - CHỈ NẾU match với ván vừa xóa
+    // XÓA ACCURACY STAT CUỐI CÙNG - CHỈ NẾU prediction đó dự đoán cho ván vừa xóa
     if (accuracyStats.streakHistory.length > 0) {
         const lastPrediction = accuracyStats.streakHistory[accuracyStats.streakHistory.length - 1];
         
-        // CHỈ xóa nếu actual result match với ván vừa undo
-        if (lastPrediction.actual === removed) {
+        // CHỈ xóa nếu prediction này dự đoán cho ván vừa xóa
+        // lastPrediction.handNumber là số ván mà prediction dự đoán
+        // currentHand + 1 là số ván hiện tại (trước khi giảm xuống)
+        const shouldRemove = lastPrediction.handNumber === (currentHand + 1);
+        
+        if (shouldRemove) {
             accuracyStats.streakHistory.pop();
             
             // Trừ total
@@ -311,6 +315,7 @@ function undoLast() {
             
             console.log('🔙 Undone prediction stat:', {
                 removed: removed,
+                handNumber: lastPrediction.handNumber,
                 wasCorrect: lastPrediction.result === 'W',
                 newTotal: accuracyStats.total,
                 newCorrect: accuracyStats.correct
@@ -344,7 +349,11 @@ function undoLast() {
                 accuracyStats.maxLossStreak = maxLoss;
             }
         } else {
-            console.log('⏭️ Không xóa stat (ván này không có prediction được track)');
+            console.log('⏭️ Không xóa stat:', {
+                reason: 'Prediction này không dự đoán cho ván vừa xóa',
+                lastPredictionFor: lastPrediction.handNumber,
+                removedHand: currentHand + 1
+            });
         }
     }
     
@@ -1160,6 +1169,7 @@ function checkPredictionAccuracy(actualResult, predictedResult) {
         result: isCorrect ? 'W' : 'L',
         predicted: predictedResult,
         actual: actualResult,
+        handNumber: currentHand, // Lưu số ván được track
         timestamp: Date.now()
     });
     
