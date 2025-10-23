@@ -212,10 +212,11 @@ function addResult(result, skipUpdate = false) {
         }
     }
     
-    // Check prediction accuracy BEFORE adding new result (skip if batch import)
-    // Need at least 20 results to have a prediction
+    // LƯU DỰ ĐOÁN CŨ TRƯỚC KHI THÊM KẾT QUẢ MỚI
+    // Dự đoán này dự đoán cho VÁN HIỆN TẠI (result vừa nhập)
+    let previousPrediction = null;
     if (!skipUpdate && gameHistory.length >= 20 && predictions.composite && predictions.composite.result) {
-        checkPredictionAccuracy(result);
+        previousPrediction = predictions.composite.result;
     }
     
     gameHistory.push(result);
@@ -228,7 +229,13 @@ function addResult(result, skipUpdate = false) {
     // Only save and update if not batch importing
     if (!skipUpdate) {
         saveToStorage();
-        updateDisplay();
+        updateDisplay(); // ← Tạo dự đoán MỚI cho ván tiếp theo
+    }
+    
+    // CHECK ACCURACY VỚI DỰ ĐOÁN CŨ (sau khi update)
+    // Dự đoán cũ đã dự đoán cho ván hiện tại, giờ check xem đúng không
+    if (previousPrediction) {
+        checkPredictionAccuracy(result, previousPrediction);
     }
     
     // Check for warnings
@@ -1013,67 +1020,65 @@ function getAccuracy() {
 // PREDICTION VERIFICATION (AUTO)
 // ==========================================
 
-function checkPredictionAccuracy(actualResult) {
-    if (predictions.composite && predictions.composite.result) {
-        const predictedResult = predictions.composite.result;
-        const predictedName = getResultName(predictedResult);
-        const actualName = getResultName(actualResult);
-        
-        console.log('🔍 Checking prediction:', {
-            predicted: predictedResult,
-            actual: actualResult,
-            isMatch: predictedResult === actualResult
-        });
-        
-        accuracyStats.total++;
-        const isCorrect = predictedResult === actualResult;
-        
-        if (isCorrect) {
-            accuracyStats.correct++;
-            // Update streak - winning
-            if (accuracyStats.currentStreak < 0) {
-                accuracyStats.currentStreak = 1; // Reset from losing to winning
-            } else {
-                accuracyStats.currentStreak++;
-            }
-            // Show success notification
-            showNotification(`✅ Dự đoán đúng: ${predictedName} = ${actualName}`);
+function checkPredictionAccuracy(actualResult, predictedResult) {
+    // predictedResult được truyền từ bên ngoài (dự đoán cũ)
+    const predictedName = getResultName(predictedResult);
+    const actualName = getResultName(actualResult);
+    
+    console.log('🔍 Checking prediction:', {
+        predicted: predictedResult,
+        actual: actualResult,
+        isMatch: predictedResult === actualResult
+    });
+    
+    accuracyStats.total++;
+    const isCorrect = predictedResult === actualResult;
+    
+    if (isCorrect) {
+        accuracyStats.correct++;
+        // Update streak - winning
+        if (accuracyStats.currentStreak < 0) {
+            accuracyStats.currentStreak = 1; // Reset from losing to winning
         } else {
-            // Update streak - losing
-            if (accuracyStats.currentStreak > 0) {
-                accuracyStats.currentStreak = -1; // Reset from winning to losing
-            } else {
-                accuracyStats.currentStreak--;
-            }
-            
-            // Track max loss streak
-            const currentLossStreak = Math.abs(accuracyStats.currentStreak);
-            if (currentLossStreak > accuracyStats.maxLossStreak) {
-                accuracyStats.maxLossStreak = currentLossStreak;
-            }
-            // Show fail notification
-            showNotification(`❌ Dự đoán sai: ${predictedName} ≠ ${actualName}`);
+            accuracyStats.currentStreak++;
+        }
+        // Show success notification
+        showNotification(`✅ Dự đoán đúng: ${predictedName} = ${actualName}`);
+    } else {
+        // Update streak - losing
+        if (accuracyStats.currentStreak > 0) {
+            accuracyStats.currentStreak = -1; // Reset from winning to losing
+        } else {
+            accuracyStats.currentStreak--;
         }
         
-        accuracyStats.streakHistory.push({
-            result: isCorrect ? 'W' : 'L',
-            predicted: predictedResult,
-            actual: actualResult,
-            timestamp: Date.now()
-        });
-        
-        // Keep only last 50 predictions
-        if (accuracyStats.streakHistory.length > 50) {
-            accuracyStats.streakHistory.shift();
+        // Track max loss streak
+        const currentLossStreak = Math.abs(accuracyStats.currentStreak);
+        if (currentLossStreak > accuracyStats.maxLossStreak) {
+            accuracyStats.maxLossStreak = currentLossStreak;
         }
-        
-        saveToStorage();
-        
-        // Force update prediction stats display
-        setTimeout(() => {
-            updatePredictionStats();
-        }, 100);
+        // Show fail notification
+        showNotification(`❌ Dự đoán sai: ${predictedName} ≠ ${actualName}`);
     }
+    
+    accuracyStats.streakHistory.push({
+        result: isCorrect ? 'W' : 'L',
+        predicted: predictedResult,
+        actual: actualResult,
+        timestamp: Date.now()
+    });
+    
+    // Keep only last 50 predictions
+    if (accuracyStats.streakHistory.length > 50) {
+        accuracyStats.streakHistory.shift();
+    }
+    
+    saveToStorage();
+    
+    // Force update prediction stats display
+    setTimeout(() => {
+        updatePredictionStats();
+    }, 100);
 }
 
 // ==========================================
