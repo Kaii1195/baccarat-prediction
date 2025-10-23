@@ -646,15 +646,13 @@ function displayPrediction(elementId, prediction) {
             
             element.innerHTML = `
                 <div class="analyzing-data">
-                    <div class="spinner-dots">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+                    <div class="pulse-container">
+                        <div class="pulse-wave"></div>
+                        <div class="pulse-wave"></div>
+                        <div class="pulse-wave"></div>
+                        <div class="pulse-core"></div>
                     </div>
-                    <span class="analyzing-text">
-                        <span class="typing-text">Đang phân tích dữ liệu</span>
-                        <span class="cursor">|</span>
-                    </span>
+                    <span class="analyzing-text">Đang phân tích dữ liệu</span>
                 </div>
             `;
             
@@ -664,19 +662,39 @@ function displayPrediction(elementId, prediction) {
                 confidenceEl.style.color = '';
             }
         } else {
-            // Đủ confidence -> show prediction
+            // Đủ confidence -> show prediction with card flip
             element.classList.add(prediction.result.toLowerCase());
+            
+            const resultIcon = prediction.result === 'B' ? '🔴' : prediction.result === 'P' ? '🔵' : '🟢';
+            const confidenceLevel = confidenceNum >= 70 ? 'Cao' : confidenceNum >= 60 ? 'Trung bình' : 'Thấp';
+            const confidenceColor = confidenceNum >= 70 ? '#2ecc71' : confidenceNum >= 60 ? '#f39c12' : '#95a5a6';
+            
             element.innerHTML = `
-                <span class="pred-label">${resultName}</span>
+                <div class="prediction-card">
+                    <div class="result-icon">${resultIcon}</div>
+                    <div class="result-name">${resultName}</div>
+                    <div class="confidence-bar-container">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${confidenceNum}%; background: ${confidenceColor}"></div>
+                        </div>
+                        <div class="confidence-info">
+                            <span class="confidence-percent">${confidence}%</span>
+                            <span class="confidence-level">${confidenceLevel}</span>
+                        </div>
+                    </div>
+                </div>
             `;
             
             const confidenceEl = document.getElementById('confidence-text');
             if (confidenceEl) {
-                confidenceEl.textContent = `✅ Tỷ lệ thắng: ${confidence}% `;
-                confidenceEl.style.color = '#2ecc71';
-                confidenceEl.style.fontWeight = 'bold';
+                confidenceEl.textContent = '';
             }
             
+            // Add flip animation
+            element.classList.add('card-flip-animation');
+            setTimeout(() => {
+                element.classList.remove('card-flip-animation');
+            }, 600);
         }
     } else {
         // For regular prediction cards (if any)
