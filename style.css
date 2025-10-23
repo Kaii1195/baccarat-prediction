@@ -660,6 +660,54 @@ header p {
     color: #95a5a6;
     font-weight: 500;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.typing-text {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 2px solid transparent;
+    white-space: nowrap;
+    animation: typing 2s steps(22) infinite, textGlow 3s ease-in-out infinite;
+}
+
+@keyframes typing {
+    0%, 100% {
+        width: 0;
+    }
+    50%, 90% {
+        width: 100%;
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        color: #95a5a6;
+    }
+    50% {
+        color: #4fc3f7;
+        text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+    }
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #4fc3f7;
+    animation: blink 0.8s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
 }
 
 .stats-grid {
@@ -1306,6 +1354,10 @@ footer .footer-icon {
     
     .analyzing-text {
         font-size: 1.1em;
+    }
+    
+    .cursor {
+        height: 1em;
     }
     
     .prediction-confidence-text,

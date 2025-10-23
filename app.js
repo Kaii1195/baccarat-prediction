@@ -651,7 +651,10 @@ function displayPrediction(elementId, prediction) {
                         <span class="dot"></span>
                         <span class="dot"></span>
                     </div>
-                    <span class="analyzing-text">Đang phân tích dữ liệu</span>
+                    <span class="analyzing-text">
+                        <span class="typing-text">Đang phân tích dữ liệu</span>
+                        <span class="cursor">|</span>
+                    </span>
                 </div>
             `;
             
