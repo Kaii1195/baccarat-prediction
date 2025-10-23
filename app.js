@@ -1631,21 +1631,31 @@ function updateMoneyDisplay() {
         return new Intl.NumberFormat('vi-VN').format(amount);
     };
     
-    // Update values
-    document.getElementById('currentCapital').textContent = formatMoney(moneyState.currentCapital);
-    
-    const profitLossEl = document.getElementById('profitLoss');
-    profitLossEl.textContent = (moneyState.profitLoss >= 0 ? '+' : '') + formatMoney(moneyState.profitLoss);
-    
-    // Update profit card color
-    const profitCard = profitLossEl.closest('.money-card');
-    if (moneyState.profitLoss < 0) {
-        profitCard.classList.add('negative');
-    } else {
-        profitCard.classList.remove('negative');
+    // Update values - CHECK NULL trước khi set
+    const currentCapitalEl = document.getElementById('currentCapital');
+    if (currentCapitalEl) {
+        currentCapitalEl.textContent = formatMoney(moneyState.currentCapital);
     }
     
-    document.getElementById('nextBet').textContent = formatMoney(moneyState.currentBet);
+    const profitLossEl = document.getElementById('profitLoss');
+    if (profitLossEl) {
+        profitLossEl.textContent = (moneyState.profitLoss >= 0 ? '+' : '') + formatMoney(moneyState.profitLoss);
+        
+        // Update profit card color
+        const profitCard = profitLossEl.closest('.money-card');
+        if (profitCard) {
+            if (moneyState.profitLoss < 0) {
+                profitCard.classList.add('negative');
+            } else {
+                profitCard.classList.remove('negative');
+            }
+        }
+    }
+    
+    const nextBetEl = document.getElementById('nextBet');
+    if (nextBetEl) {
+        nextBetEl.textContent = formatMoney(moneyState.currentBet);
+    }
     
     // Show signal if needed
     checkSignal();
@@ -1665,10 +1675,14 @@ function checkSignal() {
     const signalBox = document.getElementById('signalBox');
     const signalMessage = document.getElementById('signalMessage');
     
+    // CHECK NULL trước khi sử dụng
+    if (!signalBox || !signalMessage) return;
+    
     if (moneyState.consecutiveLosses >= moneyConfig.signalAfter) {
         signalBox.style.display = 'flex';
         
         const winProbability = (Math.pow(0.5, moneyState.consecutiveLosses + 1) * 100).toFixed(2);
+        const formatMoney = (amount) => new Intl.NumberFormat('vi-VN').format(amount);
         const potentialWin = formatMoney(moneyState.currentBet * 0.95); // Banker pays 0.95:1
         
         signalMessage.innerHTML = `
